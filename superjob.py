@@ -14,9 +14,9 @@ TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 CHAT_ID = os.getenv('CHAT_ID')
 
 headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
-body = {'grant_type': 'refresh_token', 'refresh_token': REFRESH_TOKEN}
+body = {'refresh_token': REFRESH_TOKEN, 'client_id': RESUME_ID, client_secret: ''}
 update_url = f'https://api.superjob.ru/2.0/user_cvs/update_datepub/{RESUME_ID}/'
-refresh_url = f'https://api.superjob.ru/2.0/oauth2/access_token/'
+refresh_url = f'https://api.superjob.ru/2.0/oauth2/refresh_token/'
 bot = telebot.TeleBot(token=TELEGRAM_TOKEN)
 
 def send_message(message):
@@ -34,9 +34,9 @@ def update_resume(access_token=None):
         return send_message('Резюме superjob.ru {RESUME_ID} успешно обновлено!')
 
     error_code = response.status_code
-    error_value = response.json()['error']['message']
+    error_value = response.json()['error']['error']
     send_message(f'Ошибка {error_code}: {error_value}')
-    if error_value == 'token_expired':
+    if error_value == 'invalid_token':
         refresh_token()
 
 
