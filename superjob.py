@@ -30,11 +30,11 @@ def update_resume(access_token=None):
     else:
         response = requests.post(update_url, headers=headers)
 
-    if response == {}:
+    if len(response) == 0:
         return send_message('Резюме superjob.ru {RESUME_ID} успешно обновлено!')
 
     error_code = response.status_code
-    error_value = response.json()['error']['error']
+    error_value = response.json()['error']['message']
     send_message(f'Ошибка {error_code}: {error_value}')
     if error_value == 'invalid_token':
         refresh_token()
@@ -51,7 +51,7 @@ def refresh_token():
 
     error_code = response.status_code
     error = response.json()['error']
-    error_description = response.json()['error']['message']
+    error_description = response.json()['error']['error']
     return send_message(f'Ошибка {error_code}. {error}: {error_description}')
 
 
