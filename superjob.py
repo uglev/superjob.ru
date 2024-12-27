@@ -30,7 +30,7 @@ def update_resume(access_token=None):
     else:
         response = requests.post(update_url, headers=headers)
 
-   if response.status_code == '':
+   if not response.status_code:
         return send_message(f'Резюме superjob.ru {RESUME_ID} успешно обновлено!')
 
     error_code = response.status_code
