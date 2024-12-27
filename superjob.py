@@ -31,7 +31,7 @@ def update_resume(access_token=None):
         response = requests.post(update_url, headers=headers)
 
     if not response:
-        return send_message('Резюме superjob.ru {RESUME_ID} успешно обновлено!')
+        return send_message(f'Резюме superjob.ru {RESUME_ID} успешно обновлено!')
 
     error_code = response.status_code
     error_value = response.json()['error']['message']
