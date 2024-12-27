@@ -10,11 +10,13 @@ load_dotenv(dotenv_file)
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 REFRESH_TOKEN = os.getenv('REFRESH_TOKEN')
 RESUME_ID = os.getenv('RESUME_ID')
+CLIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 CHAT_ID = os.getenv('CHAT_ID')
 
 headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
-body = {'refresh_token': REFRESH_TOKEN, 'client_id': '', 'client_secret': ''}
+body = {'refresh_token': REFRESH_TOKEN, 'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
 update_url = f'https://api.superjob.ru/2.0/user_cvs/update_datepub/{RESUME_ID}/'
 refresh_url = f'https://api.superjob.ru/2.0/oauth2/refresh_token/'
 bot = telebot.TeleBot(token=TELEGRAM_TOKEN)
