@@ -30,34 +30,33 @@ def update_resume(access_token=None):
         response = requests.post(update_url, headers=new_headers)
     else:
         response = requests.post(update_url, headers=headers)
-    if response.status_code == 204:
-        return send_message(f'Резюме superjob.ru {RESUME_ID} успешно обновлено!')
-    error_code = response.status_code
-    error_value = response.json()['error']['message']
-    send_message(f'Ошибка Superjob {error_code}: {error_value}')
+    try:
+        error_code = response.status_code
+        error_value = response.json()['error']['message']
+        send_message(f'Ошибка Superjob {error_code}: {error_value}')
+    except:
+        error_value = ''
+        send_message(f'Резюме superjob.ru {RESUME_ID} успешно обновлено!')
     if 'токен' in error_value:
         refresh_token()
 
-
 def refresh_token():
     response = requests.post(refresh_url, headers=headers, data=body)
-    if response.status_code == 200:
+    try:
+	    error_code = response.status_code
+    	error = response.json()['error']
+    	error_description = response.json()['error']['error']
+    	send_message(f'Ошибка Superjob {error_code}. {error}: {error_description}')
+    except:
         new_access_token = response.json()['access_token']
         new_refresh_token = response.json()['refresh_token']
         write_to_env(new_access_token, new_refresh_token)
         send_message('Токен Superjob успешно обновлён!')
         update_resume(new_access_token)
 
-    error_code = response.status_code
-    error = response.json()['error']
-    error_description = response.json()['error']['error']
-    return send_message(f'Ошибка Superjob {error_code}. {error}: {error_description}')
-
-
 def write_to_env(at, rt):
     set_key(dotenv_file, 'ACCESS_TOKEN', at)
     set_key(dotenv_file, 'REFRESH_TOKEN', rt)
-
 
 if __name__ == '__main__':
     update_resume()
