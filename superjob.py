@@ -43,7 +43,7 @@ def update_resume(access_token=None):
 def refresh_token():
     response = requests.post(refresh_url, headers=headers, data=body)
     try:
-	    error_code = response.status_code
+    	error_code = response.status_code
     	error = response.json()['error']
     	error_description = response.json()['error']['error']
     	send_message(f'Ошибка Superjob {error_code}. {error}: {error_description}')
