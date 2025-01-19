@@ -1,5 +1,5 @@
 # superjob.ru
-Скрипт обновляет резюме на сайте superjob.ru
+Скрипт поднимает резюме на сайте superjob.ru. Бесплатно!
 
 Инструкция (все подробности на https://api.superjob.ru/)
 1. Зарегистрируйте приложение на сайте: https://api.superjob.ru/info/ (с получением Secret Key),
